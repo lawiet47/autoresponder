@@ -61,7 +61,7 @@ For the past months there was a lot of Incident Response cases that our team had
 
 # What's the big deal? There are other tools and people for it
 
-Fair enough, Now, Imagine a scenario where thousands of the endpoints have been compromised, the attacker has established persistence on all of them and dropped a ton of files. And what a coincidence that is - whole IT team decided to go on a vacation leaving nobody back at the office to deal with the Incident and Domain Admin wants to file a paper for every key that's pressed on his keyboard - eleminating your ability to identify and eradicate threats. Good luck! (True story btw)
+Fair enough, Now, Imagine a scenario where hundreds of the endpoints have been compromised, the attacker has established persistence on all of them and dropped a ton of files. And what a coincidence that is - whole IT team decided to go on a vacation leaving nobody back at the office to deal with the Incident and Domain Admin wants to file a paper for every key that's pressed on his keyboard - eleminating your ability to identify and eradicate threats on compromised systems. Good luck! (True story btw)
 
 
 
