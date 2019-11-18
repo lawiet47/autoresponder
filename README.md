@@ -69,7 +69,7 @@ Fair enough, Now, Imagine a scenario where hundreds of the endpoints have been c
 
 The code is written in python3 so any version above 3.4 will do fine
 
-1. Download the zip archive or do a `git pull`
+1. Download the zip archive or do a `git clone`
 2. Install required modules with `pip3 install -r requirements.txt` 
 3. Configure Carbon Black API => https://cbapi.readthedocs.io/en/latest/
 4. Kick ass
