@@ -6,7 +6,7 @@ from concurrent.futures import wait
 from concurrent.futures import *
 import csv
 import click
-import os, sys
+import os, sys, re
 import base64
 
 def getFaultyEntries(elist, mode):
@@ -17,6 +17,10 @@ def getFaultyEntries(elist, mode):
 		else:
 			if mode == "SENSOR" or mode == "FILE" or mode == "REGKEY" or mode == "SERVICE" or mode == "TASK" or mode == "WMI":
 				if (all(c != '' or c != '\n' for c in elist[index])) == False:
+					Faulty_entry_list.append(index)
+			elif mode == "HASH":
+				regex = "([a-fA-F\d]{%d})" % len(elist[index])
+				if (all(c != '' or c != '\n' for c in elist[index])) == False or len(re.findall(regex, elist[index])) == 0:
 					Faulty_entry_list.append(index)
 			elif mode == "PID":
 				try:
