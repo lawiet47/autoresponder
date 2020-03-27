@@ -265,6 +265,21 @@ def cbr_kill_process(session,sensor,ioc_name_list):
 
 	return OUTPUT_MSG, FOUND_PROCESS, ERROR_MSG, CBLR_ERROR_MSG
 
+def cbr_execute_command(session, sensor, command):
+	OUTPUT_MSG=""
+	ERROR_MSG=""
+	CBLR_ERROR_MSG=""
+	try:
+		out=session.create_process("{0}".format(command), wait_timeout=10)
+		log.info("Command Sent \033[37mCOMMAND:\033[32m %s \033[37mHOST:\033[32m %s" % ((str(command), sensor['hostname'])))
+	except LiveResponseError as cblrerr:
+		CBLR_ERROR_MSG += "%s: %s\n" % (str(command), (str(cblrerr)))
+		log.warn("Live Response Error Occured \033[37mERROR:\033[33m %s \033[37mCOMMAND:\033[33m %s \033[37mHOST:\033[33m %s" % (cblrerr, str(command), sensor['hostname']))
+	except Exception as e:
+		ERROR_MSG += "%s: %s\n" % (str(command), (str(e)))
+
+	return OUTPUT_MSG, ERROR_MSG, CBLR_ERROR_MSG
+
 def cbr_get_file(session,sensor,ioc_name_list, output_path):
 	OUTPUT_MSG=""
 	ERROR_MSG=""
@@ -320,6 +335,3 @@ def cbr_get_file(session,sensor,ioc_name_list, output_path):
 		OUTPUT_MSG = ("Given IOCs are not found.")
 
 	return OUTPUT_MSG, FOUND_FILE, ERROR_MSG, CBLR_ERROR_MSG 
-
-
-	
