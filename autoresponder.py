@@ -46,7 +46,7 @@ def find_regkey(logfile, hosts, regkeys, workers):
 			log.error("There are invalid registry key values on rows: %s" % ','.join(str(index) for index in INVALID_IOC_LIST))
 			sys.exit(0)
 	#invoke_function(function, module, command, hosts, logfile, output_path, workers, regkeys)
-	invoke_function(CBRAPI, invoke_cbr, GET_REGKEY, hosts, logfile, 0, workers, IOCFILENAME_LIST)
+	invoke_function(CBRAPI, invoke_cbr, GET_REGKEY, hosts, logfile, 0, workers, IOCFILENAME_LIST, "")
 #############################################################################################################################################################################################
 ###########################For Deleting Specific Registry Values###########################
 @main.command()
@@ -66,7 +66,7 @@ def delete_regkey(logfile, hosts, regkeys, workers):
 		if len(INVALID_IOC_LIST) > 0:		
 			log.error("There are invalid registry key values on rows: %s" % ','.join(str(index) for index in INVALID_IOC_LIST))
 			sys.exit(0)
-	invoke_function(CBRAPI, invoke_cbr, DELETE_REGKEY, hosts, logfile, 0, workers, IOCFILENAME_LIST)
+	invoke_function(CBRAPI, invoke_cbr, DELETE_REGKEY, hosts, logfile, 0, workers, IOCFILENAME_LIST, "")
 #############################################################################################################################################################################################
 ###########################For Finding Specific Filenames###########################
 @main.command()
@@ -86,7 +86,7 @@ def find_file(logfile, hosts, files, workers):
 		if len(INVALID_IOC_LIST) > 0:		
 			log.error("There are invalid filename entries on rows: %s" % ','.join(str(index) for index in INVALID_IOC_LIST))
 			sys.exit(0)
-	invoke_function(CBRAPI, invoke_cbr, FIND_FILE, hosts, logfile, 0, workers, IOCFILENAME_LIST)
+	invoke_function(CBRAPI, invoke_cbr, FIND_FILE, hosts, logfile, 0, workers, IOCFILENAME_LIST, "")
 #############################################################################################################################################################################################
 ###########################For Downloading Specific Files from Sensors###########################
 @main.command()
@@ -107,7 +107,7 @@ def get_file(logfile, hosts, files, workers, output_path):
 		if len(INVALID_IOC_LIST) > 0:		
 			log.error("There are invalid filename entries on rows: %s" % ','.join(str(index) for index in INVALID_IOC_LIST))
 			sys.exit(0)
-	invoke_function(CBRAPI, invoke_cbr, GET_FILE, hosts, logfile, output_path, workers, IOCFILENAME_LIST)
+	invoke_function(CBRAPI, invoke_cbr, GET_FILE, hosts, logfile, output_path, workers, IOCFILENAME_LIST, "")
 #############################################################################################################################################################################################
 ###########################For Deleting Specific Files from Sensors###########################
 @main.command()
@@ -127,7 +127,7 @@ def delete_file(logfile, hosts, files, workers):
 		if len(INVALID_IOC_LIST) > 0:		
 			log.error("There are invalid filename entries on rows: %s" % ','.join(str(index) for index in INVALID_IOC_LIST))
 			sys.exit(0)
-	invoke_function(CBRAPI, invoke_cbr, DELETE_FILE, hosts, logfile, 0, workers, IOCFILENAME_LIST)
+	invoke_function(CBRAPI, invoke_cbr, DELETE_FILE, hosts, logfile, 0, workers, IOCFILENAME_LIST, "")
 #############################################################################################################################################################################################
 ###########################For Downloading Scheduled Task Entries###########################
 @main.command()
@@ -138,7 +138,7 @@ def delete_file(logfile, hosts, files, workers):
 def get_tasks(output_path, hosts, logfile, workers):
 	CBRAPI = connect_to_cb_server()
 	#invoke_function(function, module, command, hosts, logfile, output_path, workers, iocs)
-	invoke_function(CBRAPI, invoke_cbr, GET_TASKS, hosts, logfile, output_path, workers, 0)
+	invoke_function(CBRAPI, invoke_cbr, GET_TASKS, hosts, logfile, output_path, workers, 0, "")
 #############################################################################################################################################################################################
 ###########################For Deleting Scheduled Task Entries###########################
 @main.command()
@@ -158,7 +158,7 @@ def delete_tasks(logfile, hosts, tasks, workers):
 		if len(INVALID_IOC_LIST) > 0:		
 			log.error("There are invalid task entries on rows: %s" % ','.join(str(index) for index in INVALID_IOC_LIST))
 			sys.exit(0)
-	invoke_function(CBRAPI, invoke_cbr, DELETE_TASKS, hosts, logfile, 0, workers, IOCFILENAME_LIST)
+	invoke_function(CBRAPI, invoke_cbr, DELETE_TASKS, hosts, logfile, 0, workers, IOCFILENAME_LIST, "")
 #############################################################################################################################################################################################
 ###########################For Downloading WMI Entries###########################
 @main.command()
@@ -169,7 +169,7 @@ def delete_tasks(logfile, hosts, tasks, workers):
 def get_wmi_entries(output_path, hosts, logfile, workers):
 	CBRAPI = connect_to_cb_server()
 	#invoke_function(function, module, command, hosts, logfile, output_path, workers, iocs)
-	invoke_function(CBRAPI, invoke_cbr, GET_WMI_PERSISTENCE, hosts, logfile, output_path, workers, 0)
+	invoke_function(CBRAPI, invoke_cbr, GET_WMI_PERSISTENCE, hosts, logfile, output_path, workers, 0, "")
 #############################################################################################################################################################################################
 ###########################For Downloading Service Entries###########################
 @main.command()
@@ -180,7 +180,7 @@ def get_wmi_entries(output_path, hosts, logfile, workers):
 def get_services(output_path, hosts, logfile, workers):
 	CBRAPI = connect_to_cb_server()
 	#invoke_function(function, module, command, hosts, logfile, output_path, workers, iocs)
-	invoke_function(CBRAPI, invoke_cbr, GET_SERVICES, hosts, logfile, output_path, workers, 0)
+	invoke_function(CBRAPI, invoke_cbr, GET_SERVICES, hosts, logfile, output_path, workers, 0, "")
 #############################################################################################################################################################################################
 ###########################For Deleting Service Entries from Sensors###########################
 @main.command()
@@ -200,7 +200,7 @@ def delete_services(logfile, hosts, services, workers):
 		if len(INVALID_IOC_LIST) > 0:		
 			log.error("There are invalid service entries on rows: %s" % ','.join(str(index) for index in INVALID_IOC_LIST))
 			sys.exit(0)
-	invoke_function(CBRAPI, invoke_cbr, DELETE_SERVICES, hosts, logfile, 0, workers, IOCFILENAME_LIST)
+	invoke_function(CBRAPI, invoke_cbr, DELETE_SERVICES, hosts, logfile, 0, workers, IOCFILENAME_LIST, "")
 #############################################################################################################################################################################################
 ###########################For Killing Running Processes###########################
 @main.command()
@@ -220,7 +220,7 @@ def kill_process(logfile, hosts, pids, workers):
 		if len(INVALID_IOC_LIST) > 0:		
 			log.error("There are invalid process id entries on rows: %s" % ','.join(str(index) for index in INVALID_IOC_LIST))
 			sys.exit(0)
-	invoke_function(CBRAPI, invoke_cbr, KILL_PROCESS, hosts, logfile, 0, workers, IOCFILENAME_LIST)
+	invoke_function(CBRAPI, invoke_cbr, KILL_PROCESS, hosts, logfile, 0, workers, IOCFILENAME_LIST, "")
 #############################################################################################################################################################################################
 ###########################For Exporting The Sensor list###########################
 @main.command()
@@ -258,6 +258,17 @@ def export_sensors(export_file):
 		log.error("Exception Occured: "+str(e))
 		sys.exit(0)
 #############################################################################################################################################################################################
+###########################For Executing Commands on Sensors###########################
+@main.command()
+@click.option("--logfile", required=True, help='CSV file for the output')
+@click.option("--hosts", required=True, help='Text file containing sensor hostnames')
+@click.option("--command", required=True, help='The command to execute')
+@click.option("--workers", default=4, required=True, help='Threads to initiate (Should not be more than the CBLRMaxSession count)')
+def execute_cmd(logfile, hosts, command, workers):
+	CBRAPI = connect_to_cb_server()
+	invoke_function(CBRAPI, invoke_cbr, EXECUTE_CMD, hosts, logfile, 0, workers, 0, command)
+#############################################################################################################################################################################################
+
 ###########################For Isolating Sensors###########################
 @main.command()
 @click.option("--logfile", required=True, help='CSV file for the output')
@@ -265,7 +276,7 @@ def export_sensors(export_file):
 @click.option("--workers", default=4, required=True, help='Threads to initiate (Should not be more than the CBLRMaxSession count)')
 def isolate(logfile, hosts, workers):
 	CBRAPI = connect_to_cb_server()
-	invoke_function(CBRAPI, invoke_cbr, ISOLATE_SENSORS, hosts, logfile, 0, workers, 0)
+	invoke_function(CBRAPI, invoke_cbr, ISOLATE_SENSORS, hosts, logfile, 0, workers, 0, "")
 #############################################################################################################################################################################################
 ###########################For Removing Sensors From Isolation###########################
 @main.command()
@@ -274,7 +285,7 @@ def isolate(logfile, hosts, workers):
 @click.option("--workers", default=4, required=True, help='Threads to initiate (Should not be more than the CBLRMaxSession count)')
 def unisolate(logfile, hosts, workers):
 	CBRAPI = connect_to_cb_server()
-	invoke_function(CBRAPI, invoke_cbr, UNISOLATE_SENSORS, hosts, logfile, 0, workers, 0)
+	invoke_function(CBRAPI, invoke_cbr, UNISOLATE_SENSORS, hosts, logfile, 0, workers, 0, "")
 #############################################################################################################################################################################################
 ###########################For Restarting Sensors###########################
 @main.command()
@@ -283,7 +294,7 @@ def unisolate(logfile, hosts, workers):
 @click.option("--workers", default=4, required=True, help='Threads to initiate (Should not be more than the CBLRMaxSession count)')
 def restart_sensors(logfile, hosts, workers):
 	CBRAPI = connect_to_cb_server()
-	invoke_function(CBRAPI, invoke_cbr, RESTART_SENSORS, hosts, logfile, 0, workers, 0)
+	invoke_function(CBRAPI, invoke_cbr, RESTART_SENSORS, hosts, logfile, 0, workers, 0, "")
 #############################################################################################################################################################################################
 ###########################For Restarting Endpoints###########################
 @main.command()
@@ -292,7 +303,7 @@ def restart_sensors(logfile, hosts, workers):
 @click.option("--workers", default=4, required=True, help='Threads to initiate (Should not be more than the CBLRMaxSession count)')
 def restart_endpoints(logfile, hosts, workers):
 	CBRAPI = connect_to_cb_server()
-	invoke_function(CBRAPI, invoke_cbr, RESTART_ENDPOINTS, hosts, logfile, 0, workers, 0)
+	invoke_function(CBRAPI, invoke_cbr, RESTART_ENDPOINTS, hosts, logfile, 0, workers, 0, "")
 #############################################################################################################################################################################################
 ##########################For searching for MD5/SHA256 hash values###################################################
 @main.command()
