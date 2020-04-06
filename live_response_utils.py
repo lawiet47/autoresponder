@@ -270,8 +270,9 @@ def cbr_execute_command(session, sensor, command):
 	ERROR_MSG=""
 	CBLR_ERROR_MSG=""
 	try:
-		out=session.create_process("{0}".format(command), wait_timeout=10)
+		out=session.create_process("{0}".format(command), wait_timeout=10, wait_for_completion=False, wait_for_output=False)
 		log.info("Command Sent \033[37mCOMMAND:\033[32m %s \033[37mHOST:\033[32m %s" % ((str(command), sensor['hostname'])))
+		OUTPUT_MSG += "Command Sent: {0}".format(command)
 	except LiveResponseError as cblrerr:
 		CBLR_ERROR_MSG += "%s: %s\n" % (str(command), (str(cblrerr)))
 		log.warn("Live Response Error Occured \033[37mERROR:\033[33m %s \033[37mCOMMAND:\033[33m %s \033[37mHOST:\033[33m %s" % (cblrerr, str(command), sensor['hostname']))
