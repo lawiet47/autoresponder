@@ -75,6 +75,14 @@ The code is written in python3 so any version above 3.4 will do fine
 3. Configure Carbon Black API => https://cbapi.readthedocs.io/en/latest/
 4. Kick ass
 
+# THOR Scan
+
+To scan the collected binary repository with THOR you just need to
+ 1. Obtain the thor linux package
+ 2. Add the valid license (Trial License is not supported)
+ 3. Upload the THOR directory to the CBR server you'd like to scan (Master on a single and Minion on a clustered environment)
+ 4. Run the run-thor module
+
 ## Special Thanks to
 
 Big thanks to https://twitter.com/harunglec for helping out with the multi-threading module.
