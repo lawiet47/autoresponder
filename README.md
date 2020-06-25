@@ -32,6 +32,7 @@ AutoResponder is a tool aimed to help people to carry out their Incident Respons
 | Restart Sensors | :heavy_check_mark: |
 | Restart Endpoints | :heavy_check_mark: |
 | Generate CSV reports | :heavy_check_mark: |
+| Scan Collected binaries with THOR APT Scanner | :heavy_check_mark: |
 | Delete WMI Entries  | :x:  |
 | Solve the whole case and generate a nice report so we can all have a cold beer | :x: |
 
