@@ -350,5 +350,16 @@ def find_hash(logfile, hashes):
 
 	LOGFILE.close()
 #############################################################################################################################################################################################
+###########################For Restarting Sensors###########################
+@main.command()
+@click.option("--hostname", required=True, help='On a single CBR environment please provide the Master CBR server\'s address\nOn a clustered environment please provide the address of the Minion CBR server that you\'d like to scan')
+@click.option("--thor-dir", required=True, help='Remote THOR directory on the CBR server')
+@click.option("--username", required=True, help='SSH username for the CBR server')
+#@click.option("--password", required=True, help='SSH password for the CBR server')
+@click.option("--port", default=22, required=True, help='SSH password for the CBR server')
+def run_thor(hostname, thor_dir, username, port):
+	CBRAPI = connect_to_cb_server()
+	cbr_run_thor(CBRAPI, hostname, thor_dir, username, port)
+#############################################################################################################################################################################################
 if __name__ == '__main__':
 	main()
