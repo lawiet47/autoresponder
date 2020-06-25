@@ -79,7 +79,7 @@ The code is written in python3 so any version above 3.4 will do fine
 
 Big thanks to https://twitter.com/harunglec for helping out with the multi-threading module.
 
-You scan scan the the whole binary repository containing executable files collected by CBR with THOR APT Scanner. https://twitter.com/thor_scanner
+You scan scan the whole binary repository containing executable files collected by CBR with THOR APT Scanner. https://twitter.com/thor_scanner
 
 # P.S
 
