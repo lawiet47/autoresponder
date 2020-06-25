@@ -1,4 +1,6 @@
 from live_response_utils import *
+import paramiko
+import getpass
 #####Method Constants######
 GET_TASKS = 0
 GET_WMI_PERSISTENCE = 1
@@ -266,3 +268,44 @@ def invoke_function(CBRAPI, function, module, hosts, logfile, output_path, worke
 	LOGFILE.close()
 	########################################################################################################################################################################################################################
 	log.info("\033[37mTOTAL:\033[36m %d \033[37mONLINE:\033[32m %d \033[37mOFFLINE:\033[33m %d \033[37mUNINSTALLED:\033[33m %d \033[37mERRORS:\033[31m %d" % (len(SENSOR_LIST), len(ONLINE_SENSOR_LIST), len(OFFLINE_SENSOR_LIST), len(UNINSTALLED_SENSOR_LIST),len(ERROR_LIST)))
+
+
+def cbr_run_thor(CBAPI, hostname, thor_dir, username, port):
+	s = paramiko.SSHClient()
+	log.log(SUCCESS, "Going to ssh into {0}:{1}".format(hostname,str(port)))
+	s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+	try:
+		THOR_BINARY_NAME=""
+		log.info("Enter the password for the CBR server")
+		password = getpass.getpass()
+		s.connect(hostname, port, username, password)
+		command = 'cd {0} && ls thor'.format(thor_dir)
+		(stdin, stdout, stderr) = s.exec_command(command)
+		for line in stdout.readlines():
+			THOR_BINARY_NAME = line.strip("\r\n")
+			log.log(SUCCESS,"Found THOR linux binary in {0}".format(THOR_BINARY_NAME))
+		for line in stderr.readlines():
+			log.error("Returned Error from the remote ssh session ERROR: %s", line)
+			sys.exit(0)
+
+		CBR_BINARY_DATA_LOCATION = "/var/cb/data/modulestore/"
+		THOR_CMD_LINE = "--cpulimit 70 --minmem 1024 --yara-timeout 20 --nothordb --max_runtime 24  --noatjobs --noautoruns --nodnscache --noenv --noeventlog --noevents --nofirewall --nohosts --nohotfixes --nologons --nolsasessions --nomft --nomutex --nonetworksessions --nonetworkshares --noopenfiles --noprocs --noprofiles --noreg --norootkits --noservices --noshimcache --notasks --nousers --nowmi --nowmistartup --noamcache --noc2 --nodoublepulsar --noevtx --noexedecompress --nogroupsxml --noknowledgedb --nologscan --noprefetch --noprocconnections --noprochandles --noregistryhive --noregwalk --nostix --nothordb --novulnerabilitycheck --nowebdirscan --nower --nowmipersistence -p {0}".format(CBR_BINARY_DATA_LOCATION)
+
+		log.info("Default Location for binary storage will be scanned: {0}".format(CBR_BINARY_DATA_LOCATION))
+
+		try:
+			command = 'cd {0} && ./{1} {2}'.format(thor_dir, THOR_BINARY_NAME, THOR_CMD_LINE)
+			(stdin, stdout, stderr) = s.exec_command(command, get_pty=True)
+
+			log.log(SUCCESS,"Returned output from the remote ssh session:")
+			for line in iter(stdout.readline, ""):
+	   			print(line, end="")
+			for line in stderr.readlines():
+				log.error("Returned Error from the remote ssh session ERROR: %s", line)
+				sys.exit(0)
+		except (KeyboardInterrupt,SystemExit):
+			log.error("User closed the connection")
+		s.close()
+	except Exception as e:
+		log.error("Could not connect to %s ERROR: %s" % (hostname,str(e)))
+		sys.exit(0)
