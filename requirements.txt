@@ -1,3 +1,5 @@
 click
 cbapi
 colorlog
+paramiko
+getpass
