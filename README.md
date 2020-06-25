@@ -46,7 +46,7 @@ AutoResponder is a tool aimed to help people to carry out their Incident Respons
 | State agency  | :heavy_check_mark:  |
 | Bank  | :heavy_check_mark:  |
 | Public/Private Institution  | :heavy_check_mark:  |
-| Compant that has Carbon Black Response installed in the environment as an EDR product | :heavy_check_mark: |
+| Company that has Carbon Black Response installed in the environment as an EDR product | :heavy_check_mark: |
 | A company doing Incident Response | :heavy_check_mark: |
 | Startup? (Doubt it) | :heavy_check_mark: |
 | Person who has no idea what Carbon Black is | :x: |
@@ -79,7 +79,7 @@ The code is written in python3 so any version above 3.4 will do fine
 
 Big thanks to https://twitter.com/harunglec for helping out with the multi-threading module.
 
-Many thanks to https://twitter.com/cyb3rops & https://twitter.com/thor_scanner for inspiring the CLI :) (I hope I don't get in any trouble for copying the UI)
+You scan scan the the whole binary repository containing executable files collected by CBR with THOR APT Scanner. https://twitter.com/thor_scanner
 
 # P.S
 
