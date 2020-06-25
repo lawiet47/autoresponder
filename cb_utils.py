@@ -279,6 +279,7 @@ def cbr_run_thor(CBAPI, hostname, thor_dir, username, port):
 		log.info("Enter the password for the CBR server")
 		password = getpass.getpass()
 		s.connect(hostname, port, username, password)
+		log.info("Looking for binary named \"thor\" under {0}".format(thor_dir))
 		command = 'cd {0} && ls thor'.format(thor_dir)
 		(stdin, stdout, stderr) = s.exec_command(command)
 		for line in stdout.readlines():
