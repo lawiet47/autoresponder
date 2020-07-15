@@ -26,6 +26,51 @@ def main():
 	logo_formatted = logo_raw.replace("#", "\033[40m\033[30m \033[0m").replace("!", "\033[1m\033[47m \033[0m").replace("$", "\033[44m\033[34m \033[0m")
 	print(logo_formatted)
 #########################################################################################################################################################################################################
+##########################For searching for MD5/SHA256 hash values###################################################
+@main.command()
+@click.option("--logfile", required=True,help = 'CSV file for the output')
+@click.option("--hashes",required=True,help ='Text file containing hashes')
+def find_hash(logfile, hashes):
+	CBRAPI = connect_to_cb_server()
+	INVALID_IOC_LIST=[]
+	IOCHASH_LIST = read_file(hashes)
+	md5hash_list = []
+	sha256hash_list = []
+	binary_list = []
+	if len(IOCHASH_LIST) == 0:
+		log.error("Exiting!")
+		sys.exit(0)
+
+	INVALID_HASH_LIST = getFaultyEntries(IOCHASH_LIST, "HASH")
+	if len(INVALID_HASH_LIST) > 0:		
+		log.error("There are invalid hash entries on rows: %s" % ','.join(str(index) for index in INVALID_HASH_LIST))
+		sys.exit(0)
+	if createOutputPath(os.path.dirname(str(logfile))) == False:
+		log.error("Exiting!")
+		sys.exit(0)
+	else:
+		LOGFILE = createLogFile(logfile)
+		if LOGFILE == None:
+			log.error("Exiting!")
+			sys.exit(0)
+	CSV_WRITER = csv.writer(LOGFILE)
+	CSV_WRITER.writerow(["HASH", "FILENAME", "DESCRIPTION", "COMPANY NAME", "SIGNED", "FOUND ON ENDPOINT", "ENDPOINTS"])
+
+	for hash in IOCHASH_LIST:
+		query=""
+		if len(hash) == 32:
+			query="md5:"
+		else:
+			query="sha256:"
+		query+=str(hash)
+		binary = (CBRAPI.select(Binary).where(query).first())
+		if binary != None:
+			log.log(SUCCESS, "Hash is Found \033[37mHASH:\033[32m %s \033[37mFILE:\033[32m %s \033[37mDESCRIPTION:\033[32m %s \033[37mSIGNED:\033[32m %s \033[37mFOUND ON ENDPOINT:\033[32m %s" % ((hash, binary.original_filename, binary.file_desc, binary.signed, len(binary.endpoint))))
+			endpoint_list = [ e.split('|')[0] for e in binary.endpoint]
+			CSV_WRITER.writerow([hash, str(binary.original_filename), str(binary.file_desc), binary.company_name, str(binary.signed), len(binary.endpoint), "\n".join(endpoint_list)])
+
+	LOGFILE.close()
+#############################################################################################################################################################################################
 ###########################For Finding Specific Registry Values###########################
 @main.command()
 @click.option("--logfile", required=True, help='CSV file for the output')
