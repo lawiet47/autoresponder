@@ -79,7 +79,11 @@ def invoke_cbr(CBRAPI, hostname, module, ioc_name_list, output_path, command):
 	filename=""
 	query='hostname:'+hostname
 	try:
-		sensor=CBRAPI.select(Sensor).where(query).first()
+		sensor = None
+		sensorquery=CBRAPI.select(Sensor).where(query).all()
+		for x in sensorquery:
+			if x.hostname == hostname:
+				sensor = x
 		if sensor is None:
 			OUTPUT_MSG=""
 			ERROR_MSG="No Such Host"
