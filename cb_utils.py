@@ -19,6 +19,7 @@ UNISOLATE_SENSORS = 13
 RESTART_SENSORS = 14
 RESTART_ENDPOINTS = 15
 EXECUTE_CMD = 16
+GET_GUEST_STATUS = 17
 
 def connect_to_cb_server():
 	log.info("Trying to connect to Carbon Black Response Server")
@@ -121,6 +122,10 @@ def invoke_cbr(CBRAPI, hostname, module, ioc_name_list, output_path, command):
 						elif module == GET_SERVICES:
 						
 							filename, OUTPUT_MSG, ERROR_MSG, CBLR_ERROR_MSG = cbr_get_services(session, CURRENT_SENSOR, output_path)
+
+						elif module == GET_GUEST_STATUS:
+							filename, OUTPUT_MSG, ERROR_MSG, CBLR_ERROR_MSG = cbr_get_guest_status(session, CURRENT_SENSOR, output_path)
+							
 						elif module == DELETE_FILE:
 
 							OUTPUT_MSG, FOUND_FILE, ERROR_MSG, CBLR_ERROR_MSG = cbr_delete_file(session, CURRENT_SENSOR, ioc_name_list)
