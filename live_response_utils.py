@@ -89,6 +89,26 @@ def cbr_get_wmi_persistence(session, sensor, output_path):
 	
 	return filename, OUTPUT_MSG, ERROR_MSG, CBLR_ERROR_MSG
 
+def cbr_get_guest_status(session, sensor, output_path):
+	OUTPUT_MSG=""
+	ERROR_MSG=""
+	CBLR_ERROR_MSG=""
+	COMMAND_TO_RUN = "net user Guest|findstr /i active"
+	filename=output_path+"\\"+sensor['hostname'] + "-GuestsStatus.csv"
+	try:
+		out=session.create_process(COMMAND_TO_RUN, wait_timeout=100)
+		sensor['output_content']=out
+		OUTPUT_MSG = ("Successfully retrieved data.")
+		log.log(SUCCESS, "Successfully retrieved Guest Account statuses \033[37mHOST:\033[32m %s", sensor['hostname'])
+	except LiveResponseError as cblrerr:
+		CBLR_ERROR_MSG += "%s\n" % (str(cblrerr))
+		log.warn("Live Response Error Occured \033[37mERROR:\033[33m %s \033[37mHOST:\033[33m %s" % (cblrerr, sensor['hostname']))
+	except Exception as e:
+		ERROR_MSG += "%s\n" % (str(e))
+		log.warn("Exception occured \033[37mERROR:\033[33m %s \033[37mHOST:\033[33m %s" % (str(e), sensor['hostname']))
+	
+	return filename, OUTPUT_MSG, ERROR_MSG, CBLR_ERROR_MSG
+
 def cbr_get_services(session, sensor, output_path):
 	OUTPUT_MSG=""
 	ERROR_MSG=""
