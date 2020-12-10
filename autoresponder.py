@@ -182,6 +182,17 @@ def get_services(output_path, hosts, logfile, workers):
 	#invoke_function(function, module, command, hosts, logfile, output_path, workers, iocs)
 	invoke_function(CBRAPI, invoke_cbr, GET_SERVICES, hosts, logfile, output_path, workers, 0, "")
 #############################################################################################################################################################################################
+###########################For Fetching Guest Account Status###########################
+@main.command()
+@click.option("--output_path", required=True, help='Output path for the files containing guest account statutes')
+@click.option("--logfile", required=True, help='CSV file for the output')
+@click.option("--hosts", required=True, help='Text file containing sensor hostnames')
+@click.option("--workers", default=4, required=True, help='Threads to initiate (Should not be more than the CBLRMaxSession count)')
+def get_guest_status(output_path, hosts, logfile, workers):
+	CBRAPI = connect_to_cb_server()
+	#invoke_function(function, module, command, hosts, logfile, output_path, workers, iocs)
+	invoke_function(CBRAPI, invoke_cbr, GET_GUEST_STATUS, hosts, logfile, output_path, workers, 0, "")
+#############################################################################################################################################################################################
 ###########################For Deleting Service Entries from Sensors###########################
 @main.command()
 @click.option("--logfile", required=True, help='CSV file for the output')
