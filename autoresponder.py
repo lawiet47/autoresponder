@@ -182,7 +182,7 @@ def get_services(output_path, hosts, logfile, workers):
 	#invoke_function(function, module, command, hosts, logfile, output_path, workers, iocs)
 	invoke_function(CBRAPI, invoke_cbr, GET_SERVICES, hosts, logfile, output_path, workers, 0, "")
 #############################################################################################################################################################################################
-###########################For Fetching Guest Account Status###########################
+###########################For Fetching Guest Account Statuses###########################
 @main.command()
 @click.option("--output_path", required=True, help='Output path for the files containing guest account statutes')
 @click.option("--logfile", required=True, help='CSV file for the output')
